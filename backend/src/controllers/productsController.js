@@ -29,4 +29,5 @@ productsController.updateProduct = async (req,res) => {
     res.json({message: "Product updated"});
 };
 
+//Exportar controlador
 export default productsController;
