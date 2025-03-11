@@ -4,9 +4,12 @@
         lastName
         birthday
         email
+        address
+        hireDate
         password
         telephone
         dui
+        isssNumber
         isVerified
 */
 
@@ -14,7 +17,7 @@
 import {Schema, model} from "mongoose";
 
 //Schema
-const clientsSchema = new Schema({
+const employeesSchema = new Schema({
     name: {
         type: String,
         require: true,
@@ -38,6 +41,16 @@ const clientsSchema = new Schema({
         maxLength: 50
     },
 
+    address: {
+        type: String,
+        require: true,
+    },
+
+    hireDate: {
+        type: Date,
+        require: true
+    },
+
     password: {
         type: String,
         require: true,
@@ -57,6 +70,11 @@ const clientsSchema = new Schema({
         maxLength: 10
     },
     
+    isssNumber: {
+        type: String,
+        require: true
+    },
+
     isVerified: {
         type: Boolean,
         require: true
@@ -66,4 +84,4 @@ const clientsSchema = new Schema({
     strict: false
 });
 
-export default model("Clients", clientsSchema);
+export default model("Employees", employeesSchema);
