@@ -1,14 +1,13 @@
 //Importar archivo app.js
 import app from "./app.js";
 import "./database.js";
+import {config} from "./src/config.js";
 
 //Ejecutar el servidor
 async function main() {
-    const port = 4000;
-    app.listen(port);
-    console.log("Server Is Running");
-
-}
+    app.listen(config.server.PORT);
+    console.log("Server on Port: " + config.server.PORT);
+}   
 
 //Ejecutar todo
 main();

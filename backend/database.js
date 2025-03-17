@@ -1,11 +1,10 @@
 //Importar ORM Mongoose
 import mongoose from "mongoose";
 
-//Dirección de la Base de Datos
-const URI = "mongodb://127.0.0.1:27017/cocacolaDB"
+import {config} from "./src/config.js";
 
 //Conectar a MongoDB
-mongoose.connect(URI);
+mongoose.connect(config.db.URI);
 
 //Validación DB
 const connection = mongoose.connection;
