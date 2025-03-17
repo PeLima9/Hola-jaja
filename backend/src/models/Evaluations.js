@@ -1,29 +1,36 @@
 /*
     Campos:
         comment
-        rating
-        idClient
+        grade
+        role
+        idEmployee
 */
 
 import {Schema, model} from "mongoose";
 
-const reviewsSchema = new Schema(
+const evaluationsSchema = Schema(
     {
         comment: {
+            type: String,
+            require: true,
+            max: 500
+        },
+
+        grade: {
+            type: Number,
+            require: true,
+            min: 0,
+            max: 10
+        },
+
+        role: {
             type: String,
             require: true
         },
 
-        rating: {
-            type: Number,
-            require: true,
-            min: 0,
-            max: 5
-        },
-
-        idClient: {
+        idEmployee: {
             type: Schema.Types.ObjectId,
-            ref: "Clients",
+            ref: "Employees",
             require: true
         }
     }, {
@@ -32,4 +39,4 @@ const reviewsSchema = new Schema(
     }
 );
 
-export default model("Reviews", reviewsSchema); 
+export default model("Evaluations", evaluationsSchema);
