@@ -1,7 +1,7 @@
 const registerEmpController = {};
 
 import Employees from "../models/Employees.js";
-import bcriptjs from "brciptjs";
+import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import {config} from "../config.js";
 
@@ -17,7 +17,7 @@ registerEmpController.registerEmployee = async(req, res) => {
         }
 
         //Encript password
-        const passwordHash = await bcriptjs.hash(password, 10);
+        const passwordHash = await bcrypt.hash(password, 10);
 
         //Save employee
         const newEmployee = new Employee({

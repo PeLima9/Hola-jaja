@@ -18,7 +18,7 @@ export const config = {
     },
 
     emailAdmin:{
-        email: procces.env.ADMIN_EMAIL,
+        email: process.env.ADMIN_EMAIL,
         password: process.env.ADMIN_PASSWORD,
     },
 };

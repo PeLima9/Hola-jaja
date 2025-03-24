@@ -1,4 +1,4 @@
-import clientsModel from "../models/Clients/js";
+import clientsModel from "../models/Clients.js";
 import employeesModel from "../models/Employees.js";
 
 import bcryptjs from "bcryptjs";
