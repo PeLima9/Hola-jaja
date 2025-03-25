@@ -1,6 +1,6 @@
 const registerEmpController = {};
 
-import Employees from "../models/Employees.js";
+import Employee from "../models/Employees.js";
 import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import {config} from "../config.js";
@@ -11,7 +11,7 @@ registerEmpController.registerEmployee = async(req, res) => {
     
     try {
         //Check for existing employee
-        const exist = await Employees.findOne({email});
+        const exist = await Employee.findOne({email});
         if (exist){
             return res.json({message: "Employee already exists"});
         }
@@ -51,6 +51,7 @@ registerEmpController.registerEmployee = async(req, res) => {
                 (error, token) => {
                     if (error) console.log(error);
                     res.cookie("authToken")
+                    res.json({message: "Employee Saved"})
                 }
             );
     }
