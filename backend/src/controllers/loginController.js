@@ -2,10 +2,10 @@ import clientsModel from "../models/Clients.js";
 import employeesModel from "../models/Employees.js";
 
 import bcryptjs from "bcryptjs";
-import jsonwebtoken from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 import {config} from "../config.js";
-import { json } from "express";
+import {json} from "express";
 
 const loginController = {};
 
@@ -53,7 +53,7 @@ loginController.login = async (req, res) => {
         }
 
         //Generate token
-        jsonwebtoken.sign(
+        jwt.sign(
             
             //What to save
             {id: userFound._id, userType},

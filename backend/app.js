@@ -30,7 +30,7 @@ app.use("/api/evaluations", evaluationsRoutes);
 
 //Register and Login
 app.use("/api/registerEmployees", registerEmpRoutes);
-app.use("api/login", loginRoutes);
+app.use("/api/login", loginRoutes);
 
 //Logout
 app.use("/api/logout", logoutRoutes);
