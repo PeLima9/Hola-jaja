@@ -10,6 +10,7 @@ import evaluationsRoutes from "./src/routes/evaluations.js";
 import registerEmpRoutes from "./src/routes/registerEmployees.js";
 import loginRoutes from "./src/routes/login.js";
 import logoutRoutes from "./src/routes/logout.js";
+import registerCliRoutes from "./src/routes/registerClients.js"
 
 //Crear constante para la libreria
 const app = express();
@@ -28,12 +29,17 @@ app.use("/api/locations", locationsRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use("/api/evaluations", evaluationsRoutes);
 
-//Register and Login
+//Employees Register
 app.use("/api/registerEmployees", registerEmpRoutes);
+
+//Login
 app.use("/api/login", loginRoutes);
 
 //Logout
 app.use("/api/logout", logoutRoutes);
+
+//Clients Register
+app.use("/api/registerClients", registerCliRoutes);
 
 //Hacer la constante global
 export default app;
