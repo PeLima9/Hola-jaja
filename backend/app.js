@@ -41,5 +41,8 @@ app.use("/api/logout", logoutRoutes);
 //Clients Register
 app.use("/api/registerClients", registerCliRoutes);
 
+//Password Recovery
+app.use("/api/passwordRecovery", );
+
 //Hacer la constante global
 export default app;
