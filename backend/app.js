@@ -10,7 +10,8 @@ import evaluationsRoutes from "./src/routes/evaluations.js";
 import registerEmpRoutes from "./src/routes/registerEmployees.js";
 import loginRoutes from "./src/routes/login.js";
 import logoutRoutes from "./src/routes/logout.js";
-import registerCliRoutes from "./src/routes/registerClients.js"
+import registerCliRoutes from "./src/routes/registerClients.js";
+import passRecoveryRoutes from "./src/routes/passwordRecovery.js";
 
 //Crear constante para la libreria
 const app = express();
@@ -42,7 +43,7 @@ app.use("/api/logout", logoutRoutes);
 app.use("/api/registerClients", registerCliRoutes);
 
 //Password Recovery
-app.use("/api/passwordRecovery", );
+app.use("/api/passwordRecovery", passRecoveryRoutes);
 
 //Hacer la constante global
 export default app;

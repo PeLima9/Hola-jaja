@@ -1,13 +1,14 @@
 //Imports
 import express from "express";
+import passRecoveryController from "../controllers/passRecoveryController.js";
 
 //Router
 const router = express.Router();
 
 //Routes
-router.route("/requestCode").post();
-router.route("/verifyCode").post();
-router.route("/resetPassword").post();
+router.route("/requestCode").post(passRecoveryController.requestCode);
+router.route("/verifyCode").post(passRecoveryController.verifyCode);
+//router.route("/resetPassword").post();
 
 //Export
 export default router;

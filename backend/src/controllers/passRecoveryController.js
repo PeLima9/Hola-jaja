@@ -1,5 +1,5 @@
 //Imports
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 import Clients from "../models/Clients.js";
@@ -17,12 +17,12 @@ passRecoveryController.requestCode = async (req, res) => {
         let userFound;
         let userType; 
         
-        userFound = await clientsModel.findOne({email});
+        userFound = await Clients.findOne({email});
         if (userFound) {
             userType = "client";
         }
         else {
-            userFound = await employeeModel.findOne({email});
+            userFound = await Employees.findOne({email});
             userType = "employee";
         }
 
@@ -62,3 +62,49 @@ passRecoveryController.requestCode = async (req, res) => {
         console.log("Error: " + error);
     };
 };
+
+//Verify Code
+passRecoveryController.verifyCode = async (req, res) => {
+    const {code} = req.body;
+
+    try {
+        //Acquire Token
+        const token = req.cookies.tokenRecoveryCode;
+
+        //Extract Token Data
+        const decoded = jwt.verify(token, config.JWT.secret);
+
+        //Compare
+        if (decoded.code !== code) {
+            return res.json({message: "Invalid Code"});
+        }
+
+        //Mark as Verified
+        const newToken = jwt.sign(
+            //What to save
+            {
+                email: decoded.email, 
+                code: decoded.code,
+                userType: decoded.userType,
+                verified: true 
+            },
+
+            //Secret
+            config.JWT.secret,
+
+            //Expires In
+            {expiresIn: "25m"}
+        )
+
+        //Cookie
+        res.cookie("tokenRecoveryCode", newToken, {maxAge: 25 * 60 * 1000})
+        res.json({message: "Code Verified Successfully"});
+
+    } 
+    catch (error) {
+        console.log("Error: " + error);
+    };
+};
+
+//Export
+export default passRecoveryController;
