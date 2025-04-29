@@ -106,5 +106,53 @@ passRecoveryController.verifyCode = async (req, res) => {
     };
 };
 
+passRecoveryController.newPassword = async (req, res) => {
+    const {newPassword} = req.body;
+
+    try {
+        //Acquire Token
+        const token = req.cookies.tokenRecoveryCode;
+        
+        //Extract Token Data
+        const decoded = jwt.verify(token, config.JWT.secret);
+
+        //Compare
+        if (!decoded.verified) {
+            return res.json({message: "Code Not Verified"})
+        }
+
+        let user;
+        const {email} = decoded
+
+        //Encrypt Password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        //Save New Password
+        if (decoded.userType === "client") {
+            user = await Clients.findOneAndUpdate(
+                {email},
+                {password: hashedPassword},
+                {new: true}
+            )
+        }
+
+        else if (decoded.userType === "employee") {
+            user = await Employees.findOneAndUpdate(
+                {email},
+                {password: hashedPassword},
+                {new: true}
+            )
+        }
+        
+        res.clearCookie("tokenRecoveryCode");
+
+        res.json({message: "Password Updated"});
+
+    } 
+    catch (error) {
+        console.log("Error: " + error);
+    }
+}
+
 //Export
 export default passRecoveryController;
