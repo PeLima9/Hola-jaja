@@ -1,6 +1,8 @@
 //Importar librerías
 import express from "express";
 import cookieParser from "cookie-parser";
+
+//Routes
 import productsRoutes from "./src/routes/products.js";
 import clientsRoutes from "./src/routes/clients.js";
 import employeesRoutes from "./src/routes/employees.js";
@@ -14,6 +16,9 @@ import registerCliRoutes from "./src/routes/registerClients.js";
 import passRecoveryRoutes from "./src/routes/passwordRecovery.js";
 import blogRoutes from "./src/routes/blog.js";
 
+//Middlewares
+import {validateAuthToken} from "./src/middlewares/validateAuthToken.js";
+
 //Crear constante para la libreria
 const app = express();
 
@@ -26,7 +31,7 @@ app.use(cookieParser());
 //Definir la ruta
 app.use("/api/products", productsRoutes);
 app.use("/api/clients", clientsRoutes);
-app.use("/api/employees", employeesRoutes);
+app.use("/api/employees", validateAuthToken(["employee", "Admin"]), employeesRoutes);
 app.use("/api/locations", locationsRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use("/api/evaluations", evaluationsRoutes);

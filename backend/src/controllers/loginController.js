@@ -5,7 +5,6 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import {config} from "../config.js";
-import {json} from "express";
 
 const loginController = {};
 
