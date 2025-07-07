@@ -1,0 +1,514 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Simple Inventory API",
+    "description": "This is a simple API",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/wearingsport/CocaColaMERN/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "tags": [
+    {
+      "name": "admins",
+      "description": "Secured Admin-only calls"
+    },
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "paths": {
+    "/inventory": {
+      "get": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "searches inventory",
+        "description": "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId": "searchInventory",
+        "parameters": [
+          {
+            "name": "searchString",
+            "in": "query",
+            "description": "pass an optional search string for looking up inventory",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "number of records to skip for pagination",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of records to return",
+            "required": false,
+            "schema": {
+              "maximum": 50,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InventoryItem"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "adds an inventory item",
+        "description": "Adds an item to the system",
+        "operationId": "addInventory",
+        "requestBody": {
+          "description": "Inventory item to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "item created"
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "409": {
+            "description": "an existing item already exists"
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Select to Products Collection",
+        "description": "This get method will grant a list of all the products",
+        "operationId": "get-api-products",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Put to Products Collection",
+        "description": "Update product in Products Collection",
+        "operationId": "put-api-products",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api_products_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Post to Products Collection",
+        "description": "This method will insert products to Products Collection",
+        "operationId": "post-api-products",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api_products_body_1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete to Products Collection",
+        "description": "Delete products from Products Collection (One at a time)",
+        "operationId": "delete-api-products",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/locations": {
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Select to Locations Collection",
+        "description": "Select to Location Collections",
+        "operationId": "get-api-branches",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Put to Locations Collection",
+        "description": "Put to Locations Collection",
+        "operationId": "put-api-locations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api_locations_body"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "id": {},
+                    "name": "string",
+                    "address": "string",
+                    "telephone": "string",
+                    "schedule": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Post to Locations Collection",
+        "description": "Post to Locations Collection",
+        "operationId": "post-api-locations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api_locations_body_1"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "name": "string",
+                    "address": "string",
+                    "telephone": "string",
+                    "schedule": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Delete to Locations Collection",
+        "description": "Delete to Locations Collection (one at a time)",
+        "operationId": "delete-api-locations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InventoryItem": {
+        "required": [
+          "id",
+          "manufacturer",
+          "name",
+          "releaseDate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name": {
+            "type": "string",
+            "example": "Widget Adapter"
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "manufacturer": {
+            "$ref": "#/components/schemas/Manufacturer"
+          }
+        }
+      },
+      "Manufacturer": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "ACME Corporation"
+          },
+          "homePage": {
+            "type": "string",
+            "format": "url",
+            "example": "https://www.acme-corp.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "408-867-5309"
+          }
+        }
+      },
+      "api_products_body": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "9gdjt6y46bsbb"
+            }
+          },
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "s6cqvj222qx1u"
+            }
+          },
+          "description": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "b1y62re6r2hmi"
+            }
+          },
+          "price": {
+            "type": "number",
+            "x-stoplight": {
+              "id": "f724mzq9bl36b"
+            }
+          },
+          "stock": {
+            "type": "number",
+            "x-stoplight": {
+              "id": "tida1j4nxa0zn"
+            }
+          }
+        }
+      },
+      "api_products_body_1": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "i45mg7cirulbf"
+            }
+          },
+          "description": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "4slomm7li8pkg"
+            }
+          },
+          "price": {
+            "type": "number",
+            "x-stoplight": {
+              "id": "z360nta2lmlvl"
+            }
+          },
+          "": {
+            "type": "number",
+            "x-stoplight": {
+              "id": "091ercsenjctt"
+            }
+          }
+        }
+      },
+      "api_locations_body": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "dbtcjfpqk8vad"
+            }
+          },
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "7ffx5g1kx3dty"
+            }
+          },
+          "address": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ybypwaovktmwp"
+            }
+          },
+          "telephone": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "lmgw3aqtnddp6"
+            }
+          },
+          "schedule": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "l21nw60s0c0cc"
+            }
+          }
+        }
+      },
+      "api_locations_body_1": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "5n5aw213fpsi1"
+            }
+          },
+          "address": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ejvko20gceuma"
+            }
+          },
+          "telephone": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "qr6x003biycru"
+            }
+          },
+          "schedule": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "jh3atb4pu5m79"
+            }
+          }
+        }
+      }
+    }
+  }
+}
