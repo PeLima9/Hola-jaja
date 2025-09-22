@@ -23,6 +23,7 @@ import path from "path";
 
 //Middlewares
 import {validateAuthToken} from "./src/middlewares/validateAuthToken.js";
+import limiter from "./src/middlewares/rateLimiter.js";
 
 //Crear constante para la libreria
 const app = express();
@@ -32,6 +33,9 @@ app.use(express.json())
 
 //Accept Cookies
 app.use(cookieParser());
+
+//Limiter
+app.use(limiter);
 
 //Swagger
 const swaggerDocument = JSON.parse(fs.readFileSync(
